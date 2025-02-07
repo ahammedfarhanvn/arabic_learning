@@ -1,0 +1,27 @@
+{% extends 'arabic_lessons/base.html' %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Explore Courses</h1>
+{% for category in categories %}
+    <h2 class="mb-3">{{ category.name }}</h2>
+    <div class="row">
+        {% for course in category.courses.all %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    {% if course.image %}
+                        <img src="{{ course.image.url }}" class="card-img-top" alt="Course Image">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                        <p><strong>Difficulty:</strong> {{ course.difficulty_level }}</p>
+                        <a href="{% url 'arabic_lessons:course_detail' course.id %}" class="btn btn-primary">View Course</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}
+{% endblock %}
