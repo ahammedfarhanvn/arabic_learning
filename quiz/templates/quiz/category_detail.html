@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{{ category }} Levels</h1>
+    <div class="">
+        {% if levels_status %}
+            {% for level in levels_status %}
+                {% if level.status == "unlocked" %}
+                    <!-- Unlocked levels -->
+                    <a href="{% url 'quiz:quiz_view' category=category level=level.number %}" class="btn btn-success levels">
+                        <h5>Lv.{{ level.number }}<br></h5> <i class="fa fa-lock-open"></i>
+                    </a>
+                {% else %}
+                    <!-- Locked levels -->
+                    <button class="btn btn-secondary levels" disabled>
+                        <h5>Lv.{{ level.number }} <br></h5> <i class="fa fa-lock"></i>
+                    </button>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>No levels available for this category.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

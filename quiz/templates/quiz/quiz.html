@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+
+{% load static %}
+{% block content %}
+    <center><h2 style="margin-top: -15px;">{{ category }} - Level {{ level }}</h2></center>
+    <div class="quiz-container mt-2">
+        <form method="POST">
+            {% csrf_token %}
+            <h2 class="question">{{ question.question_text }}</h2>
+            <div class="options">
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="a" id="option_a">
+                    <label class="form-check-label options-label" for="option_a">{{ question.option_a }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="b" id="option_b">
+                    <label class="form-check-label options-label" for="option_b">{{ question.option_b }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="c" id="option_c">
+                    <label class="form-check-label options-label" for="option_c">{{ question.option_c }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="d" id="option_d">
+                    <label class="form-check-label options-label" for="option_d">{{ question.option_d }}</label>
+                </div>
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+            </div>
+            <button type="submit" class="btn btn-success mt-3 btn-block mb-6 w-100 submit">Submit Answer</button>
+        </form>
+    </div>
+{% endblock content %} 
+
+
+
+{% comment %} {% block content %}
+<h2>{{ category }} - Level {{ level }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <h3>{{ question.question_text }}</h3>
+    <ul>
+        <li><input type="radio" name="answer" value="a"> {{ question.option_a }}</li>
+        <li><input type="radio" name="answer" value="b"> {{ question.option_b }}</li>
+        <li><input type="radio" name="answer" value="c"> {{ question.option_c }}</li>
+        <li><input type="radio" name="answer" value="d"> {{ question.option_d }}</li>
+    </ul>
+    <button type="submit">Submit Answer</button>
+</form>
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %} {% endcomment %}
