@@ -1,0 +1,82 @@
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f9f9f9;
+    }
+    .card {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .btn-primary, .btn-success {
+        transition: background-color 0.3s, transform 0.2s;
+    }
+    .btn-primary:hover, .btn-success:hover {
+        transform: scale(1.05);
+    }
+    
+    
+/* Mobile First - Default styles for mobile */
+@media (max-width: 767px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    .btn-group {
+        display: block;  /* Stack buttons vertically */
+        margin-bottom: 5px;
+    }
+
+    .btn-group .btn {
+        width: 100%;  /* Make each button take full width */
+        margin-bottom: 5px;
+    }
+}
+
+/* Tablet and above (Desktop) */
+@media (min-width: 768px) {
+    .btn-group {
+        display: inline-block;  /* Keep buttons inline */
+        margin-bottom: 0;
+    }
+
+    .btn-group .btn {
+        width: auto;  /* Reset to auto width for desktop */
+        margin-right: 5px;
+    }
+}
+
+
+/* Heart Animation */
+.heart {
+    animation: heartbeat 1s ease-in-out infinite;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    margin-bottom: 30px;
+}
+
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.heart {
+    animation: heartbeat 1s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
