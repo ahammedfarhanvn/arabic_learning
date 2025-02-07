@@ -1,0 +1,39 @@
+{% extends "arabic_lessons/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Arabic Lessons</h2>
+
+    <!-- Display Progress -->
+    <div class="progress mb-4">
+        <div class="progress-bar" role="progressbar" style="width: {{ user_progress_percent }}%;" aria-valuenow="{{ user_progress_percent }}" aria-valuemin="0" aria-valuemax="100">
+            {{ user_progress_percent }}% Completed
+        </div>
+    </div>
+
+    <div class="row">
+        {% for lesson in lessons %}
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="card {% if unlocked_lessons|dictsort:lesson.id %}bg-success{% else %}bg-warning{% endif %}">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ lesson.title }}</h5>
+                    <p class="card-text">{{ lesson.content|truncatewords:20 }}</p>
+                    <a href="{% url 'arabic_lessons:lesson_detail' lesson.id %}" class="btn btn-light">Start Lesson</a>
+                    <div class="progress mt-3">
+                        <div class="progress-bar" role="progressbar" style="width: {{ streak }}%;" aria-valuenow="{{ streak }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <p class="mt-2">Streak: {{ streak }} Days</p>
+                    {% if badges %}
+                        <div class="mt-2">
+                            {% for badge in badges %}
+                                <img src="{{ badge.icon.url }}" alt="{{ badge.name }}" class="badge-icon" />
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

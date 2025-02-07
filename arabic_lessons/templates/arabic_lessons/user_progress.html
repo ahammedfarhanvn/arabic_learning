@@ -1,0 +1,28 @@
+{% extends 'arabic_lessons/base.html' %}
+
+{% block title %}My Progress{% endblock %}
+
+{% block content %}
+<h1>My Progress</h1>
+
+<h3>Badges Earned</h3>
+<div class="row">
+    {% for badge in badges %}
+        <div class="col-md-3 text-center">
+            <img src="{{ badge.image.url }}" class="img-fluid mb-2" alt="{{ badge.name }}">
+            <p>{{ badge.name }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<h3>Progress</h3>
+<ul class="list-group">
+    {% for item in progress %}
+        <li class="list-group-item">
+            <strong>Course:</strong> {{ item.course.title }} - 
+            <strong>Lesson:</strong> {{ item.lesson.title }} - 
+            <strong>Score:</strong> {{ item.score }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

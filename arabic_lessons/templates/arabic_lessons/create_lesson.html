@@ -1,0 +1,24 @@
+{% extends "arabic_lessons/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Create New Lesson</h1>
+    <hr>
+    <form method="POST" class="p-4 border rounded shadow bg-light">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="title" class="form-label">Lesson Title</label>
+            <input type="text" id="title" name="title" class="form-control" placeholder="Enter lesson title" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="content" class="form-label">Lesson Content</label>
+            <textarea id="content" name="content" class="form-control" rows="5" placeholder="Write lesson content here..." required></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <label for="level" class="form-label">Lesson Level</label>
+            <input type="number" id="level" name="level" class="form-control" placeholder="Enter level (e.g., 1, 2, 3)" required>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Create Lesson</button>
+    </form>
+</div>
+{% endblock %}
