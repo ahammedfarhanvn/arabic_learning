@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title> 
+    <script src="{% static "js/jquery-3.6.0.min.js" %}"></script>
+</head>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Create an Account</h2>
+    <form method="POST" class="border p-4 rounded shadow" id="register-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+            <span id="username_warning" style="display:none; color:red;"></span>
+            {% if error %}
+                <p style="color: red;">{{ error }}</p>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
+        </div>
+        <div class="form-group">
+            <label for="pass1">Password:</label>
+            <input type="password" id="pass1" name="pass1" class="form-control" placeholder="Enter password" required>
+        </div>
+        <div class="form-group">
+            <label for="pass2">Confirm Password:</label>
+            <input type="password" id="pass2" name="pass2" class="form-control" placeholder="Confirm password" required>
+        </div>
+        <div class="form-group">
+            <label for="profile_picture">Profile Picture:</label>
+            <input type="file" id="profile_picture" name="profile_picture" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Register</button>
+    </form>
+    <p class="text-center mt-3">Already have an account? <a href="{% url 'users:login' %}">Login</a></p>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Check if username exists
+        $('#username').on('input', function() {
+            var username = $(this).val();
+            if (username.length > 0) {
+                $.ajax({
+                    url: '{% url "users:check_username" %}',
+                    data: {
+                        'username': username
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.exists) {
+                            $('#username_warning').text('Username is already taken').show();
+                            $('#submit-btn').prop('disabled', true); // Disable submit button
+                        } else {
+                            $('#username_warning').text('').hide();
+                            $('#submit-btn').prop('disabled', false); // Enable submit button
+                        }
+                    },
+                    error: function(xhr, errmsg, err) {
+                        console.log(xhr.status + ": " + xhr.responseText);
+                    }
+                });
+            } else {
+                $('#username_warning').text('').hide();
+                $('#submit-btn').prop('disabled', false); // Enable submit button
+            }
+        });
+    });
+</script>
+{% endblock content %}

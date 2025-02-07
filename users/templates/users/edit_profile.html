@@ -1,0 +1,24 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Edit Profile</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="profile_picture">Change Profile Picture:</label>
+                <input type="file" id="profile_picture" name="profile_picture" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="avatar">Select Avatar:</label>
+                <select id="avatar" name="avatar" class="form-control">
+                    <option value="">Select an avatar</option>
+                    {% for value, name in profile.AVATAR_CHOICES %}
+                        <option value="{{ value }}" {% if profile.avatar == value %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+    </div>
+{% endblock content %}
