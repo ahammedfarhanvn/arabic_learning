@@ -1,0 +1,42 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <h1 class="mt-5">Question List</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Question Text</th>
+                    <th>Option A</th>
+                    <th>Option B</th>
+                    <th>Option C</th>
+                    <th>Option D</th>
+                    <th>Correct Answer</th>
+                    <th>Level</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td>{{ question.category }}</td>
+                    <td>{{ question.question_text }}</td>
+                    <td>{{ question.option_a }}</td>
+                    <td>{{ question.option_b }}</td>
+                    <td>{{ question.option_c }}</td>
+                    <td>{{ question.option_d }}</td>
+                    <td>{{ question.correct_answer }}</td>
+                    <td>{{ question.level }}</td>
+                    <td>
+                        {% comment %} <a href="{% url 'edit_customer' customer.id %}" class="btn btn-warning btn-sm">Edit</a> {% endcomment %}
+                        {% comment %} <a href="{% url 'delete_customer' customer.id %}" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                        {% comment %} <a href="{% url 'add_money' customer.id %}" class="btn btn-danger btn-sm">Add Money</a> {% endcomment %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% comment %} <a href="{% url 'quiz:add_question' %}" class="btn btn-primary mt-3">Add New Question</a> {% endcomment %}
+    </div>
+{% endblock content %}

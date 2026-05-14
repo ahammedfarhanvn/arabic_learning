@@ -1,0 +1,103 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+    <center><h2 style="margin-top: -15px;">{{ category }} - Level {{ level }}</h2></center>
+    <div class="quiz-container mt-2" id="quizBox">
+        <form method="POST" id="quizForm">
+            {% csrf_token %}
+            <h2 class="question">{{ question.question_text }}</h2>
+            <div class="options">
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="a" id="option_a">
+                    <label class="form-check-label options-label" for="option_a">{{ question.option_a }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="b" id="option_b">
+                    <label class="form-check-label options-label" for="option_b">{{ question.option_b }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="c" id="option_c">
+                    <label class="form-check-label options-label" for="option_c">{{ question.option_c }}</label>
+                </div>
+                <div class="form-check options-li">
+                    <input class="form-check-input options-input" type="radio" name="answer" value="d" id="option_d">
+                    <label class="form-check-label options-label" for="option_d">{{ question.option_d }}</label>
+                </div>
+                <input type="hidden" name="question_id" value="{{ question.id }}">
+            </div>
+            <button type="submit" class="btn btn-success mt-3 btn-block mb-6 w-100 submit">Submit Answer</button>
+        </form>
+    </div>
+
+    <script src="{% static "canvas-confetti@1.3.2" %}"></script>
+    <script>
+        document.getElementById("quizForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const selectedOption = document.querySelector('input[name="answer"]:checked');
+            if (!selectedOption) {
+                alert("Please select an answer");
+                return;
+            }
+            
+            const userAnswer = selectedOption.value;
+            const correctAnswer = "{{ question.correct_answer }}"; // Ensure this value is passed from the backend
+            const quizBox = document.getElementById("quizBox");
+            
+            if (userAnswer === correctAnswer) {
+                confettiEffect();
+                setTimeout(() => { document.getElementById("quizForm").submit(); }, 1000);
+            } else {
+                errorEffect();
+            }
+        });
+        
+        function confettiEffect() {
+            quizBox.classList.remove("error-effect");
+            quizBox.classList.add("success-effect");
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#ff0', '#f00', '#0f0', '#00f', '#ff6600', '#800080']
+            });
+            confetti({
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#ff0', '#f00', '#0f0', '#00f', '#ff6600', '#800080']
+            });
+        }
+        
+        function errorEffect() {
+            const quizBox = document.getElementById('quizBox');
+            quizBox.classList.add('shake');
+            quizBox.classList.remove("success-effect");
+            quizBox.classList.add("error-effect");
+            setTimeout(() => {
+                quizBox.classList.remove('shake');
+            }, 400);
+        }
+    </script>
+    
+    <style>
+        .success-effect {
+            border-color: #28a745 !important;
+            background-color: #d4edda !important;
+        }
+
+        .error-effect {
+            border-color: #dc3545 !important;
+            background-color: #f8d7da !important;
+        }
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 80% { transform: translateX(-10px); }
+            40%, 60% { transform: translateX(10px); }
+        }
+    </style>
+{% endblock content %}
+

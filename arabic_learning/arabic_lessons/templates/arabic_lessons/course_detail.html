@@ -1,0 +1,27 @@
+{% extends 'arabic_lessons/base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ course.title }}</h1>
+{% if course.image %}
+    <img src="{{ course.image.url }}" class="img-fluid mb-4" alt="Course Image">
+{% endif %}
+<p>{{ course.description }}</p>
+<h2>Modules</h2>
+<ul class="list-group">
+    {% for module in modules %}
+        <li class="list-group-item">
+            <h5>{{ module.title }}</h5>
+            <p>{{ module.description }}</p>
+            {% if module.lessons.count > 0 %}
+                <a href="{% url 'arabic_lessons:lesson_detail' course.id module.lessons.first.id %}" class="btn btn-secondary">
+                    Start Module
+                </a>
+            {% else %}
+                <p>No lessons available yet.</p>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

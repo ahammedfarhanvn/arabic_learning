@@ -1,0 +1,43 @@
+{% extends "arabic_lessons/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Add Exercise to {{ lesson.title }}</h1>
+    <hr>
+    <form method="POST" class="p-4 border rounded shadow bg-light">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="question" class="form-label">Exercise Question</label>
+            <textarea id="question" name="question" class="form-control" rows="3" placeholder="Enter the exercise question" required></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <label for="answer" class="form-label">Correct Answer</label>
+            <input type="text" id="answer" name="answer" class="form-control" placeholder="Enter the correct answer" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="question_type" class="form-label">Question Type</label>
+            <select id="question_type" name="question_type" class="form-control" required>
+                <option value="text">Text</option>
+                <option value="mcq">Multiple Choice</option>
+                <option value="fill_in">Fill in the Blank</option>
+            </select>
+        </div>
+        <div class="form-group mb-3" id="mcq-options" style="display: none;">
+            <label for="options" class="form-label">MCQ Options (Separate by commas)</label>
+            <input type="text" id="options" name="options" class="form-control" placeholder="Option1, Option2, Option3, Option4">
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Add Exercise</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('question_type').addEventListener('change', function () {
+        const mcqOptions = document.getElementById('mcq-options');
+        if (this.value === 'mcq') {
+            mcqOptions.style.display = 'block';
+        } else {
+            mcqOptions.style.display = 'none';
+        }
+    });
+</script>
+{% endblock %}

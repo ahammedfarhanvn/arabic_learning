@@ -1,0 +1,30 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+        <h1>Welcome to Arabic Learning</h1>
+        <br>
+        {% comment %} <h2>Categories</h2> {% endcomment %}
+        <ul class="list-group" style="display: flex;flex-direction: row;">
+            {% for category in category_status %}
+            <li class="list-group">
+                {% if category.status == "current" %}
+                    <a href="{% url 'quiz:category_detail' category=category.name %}" class="text-white bg-primary text-xl text-3 btn cat-list btn-block py-2 mb-1"><h4>
+                        <h4>{{ category.name }}<br><i class="fa fa-unlock-alt"></i></h4></a>
+                {% elif category.status == "unlocked" %}
+                    <!-- Previously unlocked categories -->
+                    <a href="{% url 'quiz:category_detail' category=category.name %}" class="btn btn-success text-white text-xl text-3 btn cat-list btn-block py-2 mb-1">
+                        <h4>{{ category.name }}</h4>
+                    </a>
+                {% else %}
+                    <!-- Locked categories -->
+                    <button class="btn bg-secondary text-white text-xl text-3 btn cat-list btn-block py-2 mb-1" disabled>
+                        <h4>{{ category.name }} <span class=""><br><i class="fa fa-user-lock"></i></span></h4>
+                    </button>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'quiz:dashboard' %}" class="btn btn-info mt-3">My Dashboard</a>
+    </div>
+{% endblock content %}

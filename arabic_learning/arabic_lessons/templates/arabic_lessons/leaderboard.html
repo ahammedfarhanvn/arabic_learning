@@ -1,0 +1,25 @@
+{% extends 'arabic_lessons/base.html' %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+<h1>Leaderboard</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Total Points</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in top_users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.user__username }}</td>
+                <td>{{ user.total_points }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
